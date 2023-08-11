@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "eks_igw" {
 resource "aws_subnet" "eks_pub_sub_one" {
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "eu-west-2a"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -37,7 +37,7 @@ resource "aws_subnet" "eks_pub_sub_one" {
 resource "aws_subnet" "eks_pub_sub_two" {
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "eu-west-2b"
+  availability_zone       = "us-east-2b"
   map_public_ip_on_launch = true
 
   tags = {
@@ -49,7 +49,7 @@ resource "aws_subnet" "eks_pub_sub_two" {
 resource "aws_subnet" "eks_priv_sub_one" {
   vpc_id            = aws_vpc.eks_vpc.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "eu-west-2a"
+  availability_zone = "us-east-2a"
 
   tags = {
     Name = "Private Subnet one"
@@ -60,7 +60,7 @@ resource "aws_subnet" "eks_priv_sub_one" {
 resource "aws_subnet" "eks_priv_sub_two" {
   vpc_id            = aws_vpc.eks_vpc.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "eu-west-2b"
+  availability_zone = "us-east-2b"
 
   tags = {
     Name = "Private Subnet two"
@@ -173,7 +173,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_role_attachment" {
 }
 
 # Create an EKS cluster
-resource "aws_eks_cluster" "karo_cluster" {
+resource "aws_eks_cluster" "moses_cluster" {
   name     = "eks_cluster"
   role_arn = aws_iam_role.eks_cluster_role.arn
   version  = "1.26"
@@ -192,7 +192,7 @@ resource "aws_eks_cluster" "karo_cluster" {
 
 # Export the kubeconfig for the EKS cluster
 # output "kubeconfig" {
-#  value = aws_eks_cluster.karo_cluster.kubeconfig
+#  value = aws_eks_cluster.moses_cluster.kubeconfig
 #}
 
 
@@ -235,7 +235,7 @@ resource "aws_iam_role_policy_attachment" "eks_ec2CR_policy_attachment" {
 
 # Create the EKS node group
 resource "aws_eks_node_group" "eks_node" {
-  cluster_name    = aws_eks_cluster.karo_cluster.name
+  cluster_name    = aws_eks_cluster.moses_cluster.name
   node_group_name = "eks_node"
   node_role_arn   = aws_iam_role.eks_worker_node_role.arn
 
