@@ -2,7 +2,7 @@ pipeline {
     agent any
    
     environment {
-        AWS_ACCESS_KEY_ID = credentials('MS_AWS_ACCESS_KEY_ID')
+        AWS_ACCESS_KEY_ID = credentials('MS_AWS_ACCESS_KEY_ID') 
         AWS_SECRET_ACCESS_KEY = credentials('MS_AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION = "us-east-2"
     }
@@ -23,7 +23,7 @@ pipeline {
         stage ("plan") {
             steps {
                 sh "terraform plan" 
-            }
+            } 
         }
         stage (" Action") {
             steps {
